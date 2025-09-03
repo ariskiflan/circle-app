@@ -1,6 +1,17 @@
+import { useDispatch } from "react-redux";
 import { assets } from "../assets/assets";
+import { logout } from "../slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
   return (
     <>
       <div className=" h-screen border-r-2 border-gray-500">
@@ -44,7 +55,10 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
+          <div
+            className="flex items-center gap-5 hover:translate-1 transition-all duration-100"
+            onClick={handleLogout}
+          >
             <img className="w-10" src={assets.Logout} alt="" />
             <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer">
               Logout
