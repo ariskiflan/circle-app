@@ -5,8 +5,8 @@ import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <>
-      <RouterProvider router={router} />;
-      <ToastContainer position="top-center" autoClose={3000} />;
+      <RouterProvider router={router} />
+      <ToastContainer position="top-center" autoClose={3000} />
     </>
   );
 }

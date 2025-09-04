@@ -9,7 +9,7 @@ const Home = () => {
 
   const handleGetThreads = async () => {
     const res = await getThreads();
-    setThreads(res.data.data);
+    setThreads(res.data);
     console.log(res);
   };
 
@@ -18,10 +18,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <div className="sticky top-0 pt-10 z-10 bg-[#1d1d1d]">
         <h2 className="text-white text-5xl font-bold px-5 mb-10">Home</h2>
-        <AddThread />
+        <AddThread getThread={handleGetThreads} />
       </div>
 
       <div className="">

@@ -1,32 +1,43 @@
 import api from "..";
 
 export const getThreads = async () => {
-  return await api.get("threads");
+  const res = await api.get("threads");
+  return res.data;
 };
 
-export const createThreads = async (body: {
+export const createThreads = async (data: {
   content: string;
   image: FileList | null;
   threadId?: number;
 }) => {
   const formData = new FormData();
 
-  if (body.image !== null) {
-    for (let i = 0; i < body.image.length; i++) {
-      formData.append("image", body.image[i]);
+  console.log(data, "DATA");
+
+  if (data.image !== null) {
+    for (let i = 0; i < data.image.length; i++) {
+      formData.append("image", data.image[i]);
     }
   }
 
-  if (body.threadId) {
-    formData.append("threadId", body.threadId.toString());
+  if (data.threadId) {
+    formData.append("threadId", data.threadId.toString());
   }
 
-  formData.append("content", body.content);
+  formData.append("content", data.content);
 
-  return await api.post("thread", formData, {
+  // const res = await api.post("thread", formData, {
+  //   headers: {
+  //     "Content-Type": "multipart/form-data",
+  //     Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //   },
+  // });
+
+  const res = await api.post("thread", formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+
+  return res.data;
 };

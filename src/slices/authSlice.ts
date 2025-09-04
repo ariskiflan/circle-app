@@ -1,21 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { IProfile } from "../types/app";
 
-const initialState = {
-  user: null,
-  token: null,
+interface IAuthState {
+  user: IProfile | null | undefined;
+  token: string;
+}
+
+const initialState: IAuthState = {
+  user: undefined,
+  token: "",
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (
+      state,
+      action: PayloadAction<{ user: IProfile; token: string }>
+    ) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
     logout: (state) => {
-      state.user = null;
-      state.token = null;
+      state.user = undefined;
+      state.token = "";
       localStorage.removeItem("token");
       localStorage.removeItem("user");
     },

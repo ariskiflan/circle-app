@@ -10,7 +10,7 @@ const RootLayouts = () => {
           <Sidebar />
         </div>
 
-        <main className=" ">
+        <main className="">
           <Outlet />
         </main>
 

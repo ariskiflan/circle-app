@@ -5,6 +5,9 @@ import type { ILogin } from "../types/app";
 import { login } from "../services/call/user";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { getProfile } from "../services/call/profile";
+import { useDispatch } from "react-redux";
+import { setUser } from "../slices/authSlice";
 
 const Login = () => {
   const initialState = {
@@ -13,6 +16,7 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formInput, setFormInput] = useState<ILogin>(initialState);
 
@@ -21,10 +25,18 @@ const Login = () => {
     try {
       const res = await login(formInput);
       if (res.status) {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-        toast.success(`Login Success!`);
+        const token = res.data.token;
 
+        console.log(token, "token");
+
+        localStorage.setItem("token", token);
+
+        const profileRes = await getProfile(token);
+        localStorage.setItem("user", JSON.stringify(profileRes.data));
+
+        dispatch(setUser({ user: profileRes.data, token }));
+
+        toast.success(`Login Success!`);
         navigate("/");
       }
     } catch (error) {
@@ -70,7 +82,10 @@ const Login = () => {
               name="password"
             />
 
-            <button className="bg-[#04A51E] text-white w-full py-2 rounded-3xl text-xl font-medium hover:bg-transparent  transition-all duration-100 ease-in-out hover:[box-shadow:inset_0_0_0_2px_white] cursor-pointer">
+            <button
+              type="submit"
+              className="bg-[#04A51E] text-white w-full py-2 rounded-3xl text-xl font-medium hover:bg-transparent  transition-all duration-100 ease-in-out hover:[box-shadow:inset_0_0_0_2px_white] cursor-pointer"
+            >
               Login
             </button>
           </form>

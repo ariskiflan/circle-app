@@ -1,12 +1,13 @@
 import { assets } from "../assets/assets";
 import type { IThread } from "../types/app";
+import timeAgo from "../utils/formatTime";
 
 interface IThreadProps {
   thread: IThread;
 }
 
 const Threads = ({ thread }: IThreadProps) => {
-  const { content, author, image, id, userId, posted_at, _count } = thread;
+  const { content, author, image, posted_at, _count } = thread;
 
   return (
     <div className="border-b-2 border-gray-500">
@@ -20,16 +21,22 @@ const Threads = ({ thread }: IThreadProps) => {
 
           <div className="flex flex-col gap-3">
             <div className="flex gap-3 items-center">
-              <p className="font-bold text-xl">{author.fullname}</p>
+              <p className="font-bold text-xl">{author?.fullname}</p>
               <p className="text-gray-400 text-md font-semibold">
-                {author?.username}
+                @{author?.username}
               </p>
               <div className="w-2 h-2 rounded-full bg-gray-400"></div>
-              <p className="text-gray-400 text-md font-semibold">{posted_at}</p>
+              <p className="text-gray-400 text-md font-semibold">
+                {timeAgo(posted_at)}
+              </p>
             </div>
 
             <div>
               <p className="text-md font-normal line-clamp-5">{content}</p>
+
+              <div className="grid grid-cols-2 gap-2">
+                {image && image.map((item) => <img src={item.image} alt="" />)}
+              </div>
             </div>
 
             <div className="flex gap-5 items-center">
