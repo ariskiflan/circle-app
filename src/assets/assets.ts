@@ -8,6 +8,7 @@ import GaleryAdd from "./img/gallery-add.png";
 import Avatar from "./img/avatar.png";
 import Reply from "./img/reply.png";
 import FooterLogo from "./img/main-logo.png";
+import Back from "./img/back.png";
 
 export const assets = {
   Logo,
@@ -20,4 +21,5 @@ export const assets = {
   Avatar,
   Reply,
   FooterLogo,
+  Back,
 };

@@ -1,6 +1,7 @@
 import { useRef, useState, type ChangeEvent, type SyntheticEvent } from "react";
 import { assets } from "../assets/assets";
 import { createThreads } from "../services/call/threads";
+import { useLocation } from "react-router-dom";
 
 interface AddThread {
   content: string;
@@ -10,9 +11,10 @@ interface AddThread {
 
 interface Props {
   getThread: () => void;
+  threadId?: number;
 }
 
-const AddThread = ({ getThread }: Props) => {
+const AddThread = ({ getThread, threadId }: Props) => {
   const profileString = localStorage.getItem("user");
 
   let profile = null;
@@ -27,10 +29,15 @@ const AddThread = ({ getThread }: Props) => {
   });
   const [preview, setPreview] = useState<any>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const location = useLocation();
 
   const handlePostThreads = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
+      if (threadId) {
+        postThreads.threadId = threadId;
+      }
+
       if (postThreads.content !== "" || postThreads.image !== null) {
         await createThreads(postThreads);
 
@@ -77,7 +84,7 @@ const AddThread = ({ getThread }: Props) => {
   };
 
   return (
-    <div className="border-b-2 border-gray-500 p-5 w-full flex flex-col gap-5">
+    <div className="border-b-2 border-gray-500 p-5 w-full flex flex-col">
       <div className="flex items-center gap-5 w-full">
         <img
           src={profile?.avatar || assets.Profile}
@@ -88,8 +95,12 @@ const AddThread = ({ getThread }: Props) => {
         <div className="flex-1 flex items-center gap-3">
           <input
             type="text"
-            placeholder="What's on your mind?"
-            className="flex-1 border-2 border-gray-500 text-white bg-transparent px-4 py-2 rounded-3xl"
+            placeholder={
+              location.pathname == "/"
+                ? "What's on your mind?"
+                : "Type Your Reply"
+            }
+            className="flex-1 text-xl text-white bg-transparent px-4 py-2 outline-none"
             onChange={handleChange}
             name="content"
             value={postThreads.content}

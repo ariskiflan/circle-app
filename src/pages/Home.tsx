@@ -10,7 +10,6 @@ const Home = () => {
   const handleGetThreads = async () => {
     const res = await getThreads();
     setThreads(res.data);
-    console.log(res);
   };
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const Home = () => {
       <div className="">
         {threads.map((item) => (
           <div key={item.id}>
-            <Threads thread={item} />
+            <Threads thread={item} handleGetThreads={handleGetThreads} />
           </div>
         ))}
       </div>

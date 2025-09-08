@@ -1,13 +1,16 @@
+import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 import type { IThread } from "../types/app";
 import timeAgo from "../utils/formatTime";
+import Like from "./Like";
 
 interface IThreadProps {
   thread: IThread;
+  handleGetThreads: () => void;
 }
 
-const Threads = ({ thread }: IThreadProps) => {
-  const { content, author, image, posted_at, _count } = thread;
+const Threads = ({ thread, handleGetThreads }: IThreadProps) => {
+  const { content, author, image, posted_at, _count, id } = thread;
 
   return (
     <div className="border-b-2 border-gray-500">
@@ -31,27 +34,40 @@ const Threads = ({ thread }: IThreadProps) => {
               </p>
             </div>
 
-            <div>
+            <div className="flex flex-col gap-3">
               <p className="text-md font-normal line-clamp-5">{content}</p>
 
               <div className="grid grid-cols-2 gap-2">
-                {image && image.map((item) => <img src={item.image} alt="" />)}
+                {image &&
+                  image.map((item) => (
+                    <div key={item.id}>
+                      <img src={item.image} alt="" />
+                    </div>
+                  ))}
               </div>
             </div>
 
             <div className="flex gap-5 items-center">
               <div className="flex gap-2 items-center">
-                <img className="w-6" src={assets.Like} alt="" />
+                <Like
+                  threadId={Number(id)}
+                  handleGetThreads={handleGetThreads}
+                />
                 <span className="text-md text-gray-400 font-medium">
                   {_count.like}
                 </span>
               </div>
 
               <div className="flex gap-2 items-center">
-                <img src={assets.Reply} className="w-6" alt="" />
-                <span className="text-md text-gray-400 font-medium">
-                  {_count.replies} Replies
-                </span>
+                <Link
+                  to={`/detail-thread/${id}`}
+                  className="flex gap-2 items-center"
+                >
+                  <img src={assets.Reply} className="w-6" alt="" />
+                  <span className="text-md text-gray-400 font-medium">
+                    {_count.replies} Replies
+                  </span>
+                </Link>
               </div>
             </div>
           </div>

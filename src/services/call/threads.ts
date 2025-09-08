@@ -41,3 +41,23 @@ export const createThreads = async (data: {
 
   return res.data;
 };
+
+export const getThreadById = async (id: number) => {
+  const res = await api.get(`thread/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  return res.data;
+};
+
+export const getReplies = async (id: number) => {
+  const res = await api.get(`replies/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  return res.data;
+};
