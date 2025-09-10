@@ -1,13 +1,8 @@
-// import { assets } from "../assets/assets";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store";
 
 const Profile = () => {
-  const profileString = localStorage.getItem("user");
-
-  let profile = null;
-
-  if (profileString) {
-    profile = JSON.parse(profileString);
-  }
+  const user = useSelector((state: RootState) => state.auth.user);
 
   return (
     <>
@@ -17,7 +12,7 @@ const Profile = () => {
         <div className="relative">
           <div className=" w-full h-[100px] rounded-2xl bg-green-500"></div>
           <div className="w-20 h-20 rounded-full bg-gray-400 border-4 border-black absolute bottom-[-40px] left-[30px] object-cover">
-            <img src={profile?.avatar} alt="" />
+            <img src={user?.avatar} alt="" />
           </div>
         </div>
 
@@ -28,19 +23,19 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <p className="text-2xl font-semibold">{profile.user.fullname}</p>
+          <p className="text-2xl font-semibold">{user?.user.fullname}</p>
           <span className="text-gray-400 font-semibold text-md">
-            @{profile.user.username}
+            @{user?.user.username}
           </span>
-          <p className="text-md font-normal">{profile.bio}</p>
+          <p className="text-md font-normal">{user?.bio}</p>
 
           <div className="flex items-center gap-5">
             <p className="text-md font-semibold">
-              {profile.user.following.length}{" "}
+              {user?.user?.following?.length}{" "}
               <span className="text-gray-400 font-normal">Following</span>
             </p>
             <p className="text-md font-semibold">
-              {profile.user.follower.length}{" "}
+              {user?.user?.follower?.length}{" "}
               <span className="text-gray-400 font-normal">Followers</span>{" "}
             </p>
           </div>

@@ -29,10 +29,10 @@ const Login = () => {
 
         console.log(token, "token");
 
-        localStorage.setItem("token", token);
+        // localStorage.setItem("token", token);
 
         const profileRes = await getProfile(token);
-        localStorage.setItem("user", JSON.stringify(profileRes.data));
+        // localStorage.setItem("user", JSON.stringify(profileRes.data));
 
         dispatch(setUser({ user: profileRes.data, token }));
 

@@ -21,8 +21,6 @@ const ThreadDetail = () => {
       setReplies(resReplies.data);
 
       setThreadDetail(res.data);
-
-      console.log(resReplies.data, "data replies");
     } catch (error) {
       console.log(error);
     }

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { assets } from "../assets/assets";
 import { logout } from "../slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -21,12 +21,15 @@ const Sidebar = () => {
 
             <div>
               <ul className="flex flex-col gap-10">
-                <li className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
-                  <img className="w-10" src={assets.Home} alt="" />
-                  <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer ">
-                    Home
-                  </p>
-                </li>
+                <Link to={"/"}>
+                  <li className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
+                    <img className="w-10" src={assets.Home} alt="" />
+                    <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer ">
+                      Home
+                    </p>
+                  </li>
+                </Link>
+
                 <li className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
                   <img className="w-10" src={assets.UserSearch} alt="" />
                   <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer">
@@ -39,12 +42,14 @@ const Sidebar = () => {
                     Follows
                   </p>
                 </li>
-                <li className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
-                  <img className="w-10" src={assets.Profile} alt="" />
-                  <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer">
-                    Profile
-                  </p>
-                </li>
+                <Link to="/my-profile">
+                  <li className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
+                    <img className="w-10" src={assets.Profile} alt="" />
+                    <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer">
+                      Profile
+                    </p>
+                  </li>
+                </Link>
               </ul>
             </div>
 

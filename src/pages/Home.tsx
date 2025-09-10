@@ -8,8 +8,12 @@ const Home = () => {
   const [threads, setThreads] = useState<IThread[]>([]);
 
   const handleGetThreads = async () => {
-    const res = await getThreads();
-    setThreads(res.data);
+    try {
+      const res = await getThreads();
+      setThreads(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import Avatar from "./img/avatar.png";
 import Reply from "./img/reply.png";
 import FooterLogo from "./img/main-logo.png";
 import Back from "./img/back.png";
+import Loading from "./img/loading.gif";
 
 export const assets = {
   Logo,
@@ -22,4 +23,5 @@ export const assets = {
   Reply,
   FooterLogo,
   Back,
+  Loading,
 };

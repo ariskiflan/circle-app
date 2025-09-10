@@ -7,9 +7,12 @@ interface IAuthState {
   token: string;
 }
 
+const savedUser = JSON.parse(localStorage.getItem("user") || "{}");
+const savedToken = localStorage.getItem("token");
+
 const initialState: IAuthState = {
-  user: undefined,
-  token: "",
+  user: savedUser ? (savedUser as IProfile) : undefined,
+  token: savedToken || "",
 };
 
 const authSlice = createSlice({
@@ -22,6 +25,8 @@ const authSlice = createSlice({
     ) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem("token", action.payload.token);
     },
     logout: (state) => {
       state.user = undefined;

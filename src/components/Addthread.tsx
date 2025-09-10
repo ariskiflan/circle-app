@@ -2,6 +2,8 @@ import { useRef, useState, type ChangeEvent, type SyntheticEvent } from "react";
 import { assets } from "../assets/assets";
 import { createThreads } from "../services/call/threads";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store";
 
 interface AddThread {
   content: string;
@@ -15,14 +17,6 @@ interface Props {
 }
 
 const AddThread = ({ getThread, threadId }: Props) => {
-  const profileString = localStorage.getItem("user");
-
-  let profile = null;
-
-  if (profileString) {
-    profile = JSON.parse(profileString);
-  }
-
   const [postThreads, setPostThreads] = useState<AddThread>({
     content: "",
     image: null,
@@ -30,6 +24,7 @@ const AddThread = ({ getThread, threadId }: Props) => {
   const [preview, setPreview] = useState<any>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handlePostThreads = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -84,10 +79,10 @@ const AddThread = ({ getThread, threadId }: Props) => {
   };
 
   return (
-    <div className="border-b-2 border-gray-500 p-5 w-full flex flex-col">
+    <div className="border-b-2 border-gray-500 p-5 w-full flex flex-col gap-4">
       <div className="flex items-center gap-5 w-full">
         <img
-          src={profile?.avatar || assets.Profile}
+          src={user?.avatar || assets.Profile}
           alt="avatar"
           className="w-10 h-10 rounded-full object-cover"
         />
@@ -130,13 +125,13 @@ const AddThread = ({ getThread, threadId }: Props) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
-        {preview
-          ? preview.map((item: any) => (
+      {preview
+        ? preview.map((item: any) => (
+            <div className="grid grid-cols-2 gap-2">
               <img className="w-full" src={item} alt="" />
-            ))
-          : ""}
-      </div>
+            </div>
+          ))
+        : ""}
     </div>
   );
 };

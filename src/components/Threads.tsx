@@ -3,6 +3,9 @@ import { assets } from "../assets/assets";
 import type { IThread } from "../types/app";
 import timeAgo from "../utils/formatTime";
 import Like from "./Like";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { deleteThread } from "../services/call/threads";
+import { toast } from "react-toastify";
 
 interface IThreadProps {
   thread: IThread;
@@ -10,12 +13,30 @@ interface IThreadProps {
 }
 
 const Threads = ({ thread, handleGetThreads }: IThreadProps) => {
-  const { content, author, image, posted_at, _count, id } = thread;
+  const { content, author, image, posted_at, _count, id, userId } = thread;
+
+  const profileString = localStorage.getItem("user");
+
+  let profile = null;
+
+  if (profileString) {
+    profile = JSON.parse(profileString);
+  }
+
+  const handleDeleteThread = async () => {
+    try {
+      await deleteThread(Number(id));
+      handleGetThreads();
+      toast.success(`Delete Thread Success!`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="border-b-2 border-gray-500">
       <div className="p-5">
-        <div className="flex gap-5">
+        <div className="flex gap-5 relative">
           <img
             src={author?.profile?.avatar || assets.Profile}
             alt="avatar"
@@ -71,6 +92,15 @@ const Threads = ({ thread, handleGetThreads }: IThreadProps) => {
               </div>
             </div>
           </div>
+
+          {userId == profile.userId ? (
+            <div
+              className="absolute top-0 right-0"
+              onClick={handleDeleteThread}
+            >
+              <RiDeleteBin6Line size={24} />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

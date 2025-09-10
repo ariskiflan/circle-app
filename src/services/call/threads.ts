@@ -61,3 +61,13 @@ export const getReplies = async (id: number) => {
 
   return res.data;
 };
+
+export const deleteThread = async (id: number) => {
+  const res = await api.delete(`deleteThread/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  return res.data;
+};
