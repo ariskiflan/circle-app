@@ -45,7 +45,7 @@ const Threads = ({ thread, handleGetThreads }: IThreadProps) => {
 
           <div className="flex flex-col gap-3">
             <div className="flex gap-3 items-center">
-              <p className="font-bold text-xl">{author?.fullname}</p>
+              <p className="font-semibold text-xl">{author?.fullname}</p>
               <p className="text-gray-400 text-md font-semibold">
                 @{author?.username}
               </p>
@@ -60,8 +60,8 @@ const Threads = ({ thread, handleGetThreads }: IThreadProps) => {
 
               <div className="grid grid-cols-2 gap-2">
                 {image &&
-                  image.map((item) => (
-                    <div key={item.id}>
+                  image.map((item, index: number) => (
+                    <div key={index}>
                       <img src={item.image} alt="" />
                     </div>
                   ))}

@@ -5,7 +5,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProtectedRoute from "./protectedRoute";
 import ThreadDetail from "../pages/ThreadDetail";
-import Profile from "../components/Profile";
+import MyProfile from "../pages/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/my-profile",
-            element: <Profile />,
+            element: <MyProfile />,
           },
         ],
       },
