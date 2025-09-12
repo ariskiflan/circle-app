@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { getProfile } from "../services/call/profile";
 import { useDispatch } from "react-redux";
-import { setUser } from "../slices/authSlice";
+import { setUser } from "../store/slices/authSlice";
 
 const Login = () => {
   const initialState = {
@@ -29,10 +29,7 @@ const Login = () => {
 
         console.log(token, "token");
 
-        // localStorage.setItem("token", token);
-
         const profileRes = await getProfile(token);
-        // localStorage.setItem("user", JSON.stringify(profileRes.data));
 
         dispatch(setUser({ user: profileRes.data, token }));
 

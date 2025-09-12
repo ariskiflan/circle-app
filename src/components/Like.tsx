@@ -24,11 +24,9 @@ const Like = ({ threadId, handleGetThreads }: ILikeProps) => {
 
   const handleLike = async () => {
     try {
-      const res = await createLike(threadId);
+      await createLike(threadId);
 
       await getLikes();
-
-      console.log(res);
     } catch (error) {
       console.log(error);
     }

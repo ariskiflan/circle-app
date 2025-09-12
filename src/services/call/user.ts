@@ -10,3 +10,23 @@ export const login = async (data: ILogin) => {
   const res = await api.post("login", data);
   return res.data;
 };
+
+export const getUsers = async () => {
+  const res = await api.get("user", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  return res.data;
+};
+
+export const getUser = async (id: number) => {
+  const res = await api.get(`user/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  return res.data;
+};

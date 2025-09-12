@@ -49,4 +49,15 @@ export interface IProfile {
   avatar?: string;
   cover?: string;
   user: IUser;
+  userId?: number;
+}
+
+export interface IUserSearch {
+  id: number;
+  username: string;
+  fullname: string;
+  email: string;
+  profile?: IProfileSearch;
+  following?: IFollowing[];
+  follower?: IFollower[];
 }

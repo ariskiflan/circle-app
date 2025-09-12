@@ -6,6 +6,8 @@ import Like from "./Like";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { deleteThread } from "../services/call/threads";
 import { toast } from "react-toastify";
+import type { RootState } from "../store";
+import { useSelector } from "react-redux";
 
 interface IThreadProps {
   thread: IThread;
@@ -14,14 +16,7 @@ interface IThreadProps {
 
 const Threads = ({ thread, handleGetThreads }: IThreadProps) => {
   const { content, author, image, posted_at, _count, id, userId } = thread;
-
-  const profileString = localStorage.getItem("user");
-
-  let profile = null;
-
-  if (profileString) {
-    profile = JSON.parse(profileString);
-  }
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handleDeleteThread = async () => {
     try {
@@ -33,15 +28,25 @@ const Threads = ({ thread, handleGetThreads }: IThreadProps) => {
     }
   };
 
+  const handleRedirectProfile = () => {
+    if (user?.id !== author?.id) {
+      return `/profile/${author?.id}`;
+    }
+    return "/my-profile";
+  };
+
   return (
     <div className="border-b-2 border-gray-500">
       <div className="p-5">
         <div className="flex gap-5 relative">
-          <img
-            src={author?.profile?.avatar || assets.Profile}
-            alt="avatar"
-            className="w-10 h-10 rounded-full object-cover"
-          />
+          <Link to={handleRedirectProfile()}>
+            <div className="w-10 h-10 rounded-full object-cover">
+              <img
+                src={author?.profile?.avatar || assets.Profile}
+                alt="avatar"
+              />
+            </div>
+          </Link>
 
           <div className="flex flex-col gap-3">
             <div className="flex gap-3 items-center">
@@ -93,7 +98,7 @@ const Threads = ({ thread, handleGetThreads }: IThreadProps) => {
             </div>
           </div>
 
-          {userId == profile.userId ? (
+          {userId == user?.userId ? (
             <div
               className="absolute top-0 right-0"
               onClick={handleDeleteThread}

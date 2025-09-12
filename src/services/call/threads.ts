@@ -62,6 +62,16 @@ export const getThreadByUserId = async (id: number) => {
   return res.data;
 };
 
+export const getThreadByToken = async () => {
+  const res = await api.get("threadByToken", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  return res.data;
+};
+
 export const getReplies = async (id: number) => {
   const res = await api.get(`replies/${id}`, {
     headers: {

@@ -1,30 +1,40 @@
-import { useSelector } from "react-redux";
-import type { RootState } from "../store";
 import { assets } from "../assets/assets";
-import { Link } from "react-router-dom";
-import type { IThread } from "../types/app";
+import { Link, useParams } from "react-router-dom";
+import type { IThread, IUser } from "../types/app";
 import { useEffect, useState } from "react";
-import { getThreadByToken } from "../services/call/threads";
+import { getThreadByUserId } from "../services/call/threads";
 import Threads from "../components/Threads";
+import { getUser } from "../services/call/user";
 
-const MyProfile = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+const Profile = () => {
+  const { id } = useParams();
 
-  const [threadsByUserToken, setThreadsByUserToken] = useState<IThread[]>([]);
+  const [threadsByUserId, setThreadsByUserId] = useState<IThread[]>([]);
+  const [userById, setUserById] = useState<IUser>();
   const [activeTab, setActiveTab] = useState("all");
 
-  const handleGetThreadsByUserToken = async () => {
+  const handleGetUserById = async () => {
     try {
-      const res = await getThreadByToken();
+      const res = await getUser(Number(id));
 
-      setThreadsByUserToken(res.data);
+      setUserById(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetThreadsByUserId = async () => {
+    try {
+      const res = await getThreadByUserId(Number(id));
+      setThreadsByUserId(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    handleGetThreadsByUserToken();
+    handleGetUserById();
+    handleGetThreadsByUserId();
   }, []);
 
   return (
@@ -37,13 +47,13 @@ const MyProfile = () => {
                 <img src={assets.Back} alt="" className="w-10" />
               </Link>
 
-              <p className="text-2xl font-semibold">{user?.user.fullname}</p>
+              <p className="text-2xl font-semibold">{userById?.fullname}</p>
             </div>
 
             <div className="relative">
               <div className=" w-full h-[100px] rounded-2xl bg-green-500"></div>
               <div className="w-20 h-20 rounded-full bg-gray-400 border-4 border-black absolute bottom-[-40px] left-[30px] object-cover">
-                <img src={user?.avatar} alt="" />
+                <img src={userById?.profile?.avatar} alt="" />
               </div>
             </div>
 
@@ -54,19 +64,19 @@ const MyProfile = () => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-2xl font-semibold">{user?.user.fullname}</p>
+              <p className="text-2xl font-semibold">{userById?.fullname}</p>
               <span className="text-gray-400 font-semibold text-md">
-                @{user?.user.username}
+                @{userById?.username}
               </span>
-              <p className="text-md font-normal">{user?.bio}</p>
+              <p className="text-md font-normal">{userById?.profile?.bio}</p>
 
               <div className="flex items-center gap-5">
                 <p className="text-md font-semibold">
-                  {user?.user?.following?.length}{" "}
+                  {userById?.following?.length}{" "}
                   <span className="text-gray-400 font-normal">Following</span>
                 </p>
                 <p className="text-md font-semibold">
-                  {user?.user?.follower?.length}{" "}
+                  {userById?.follower?.length}{" "}
                   <span className="text-gray-400 font-normal">
                     Followers
                   </span>{" "}
@@ -102,18 +112,18 @@ const MyProfile = () => {
         <div className="">
           {activeTab === "all" ? (
             <div>
-              {threadsByUserToken.map((item) => (
+              {threadsByUserId.map((item) => (
                 <div key={item.id}>
                   <Threads
                     thread={item}
-                    handleGetThreads={handleGetThreadsByUserToken}
+                    handleGetThreads={handleGetThreadsByUserId}
                   />
                 </div>
               ))}
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-2 p-5">
-              {threadsByUserToken.map((thread) =>
+              {threadsByUserId.map((thread) =>
                 thread.image?.map((img) => (
                   <img
                     key={img.id}
@@ -131,4 +141,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default Profile;

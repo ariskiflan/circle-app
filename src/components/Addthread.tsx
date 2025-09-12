@@ -1,7 +1,7 @@
 import { useRef, useState, type ChangeEvent, type SyntheticEvent } from "react";
 import { assets } from "../assets/assets";
 import { createThreads } from "../services/call/threads";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store";
 
@@ -81,11 +81,11 @@ const AddThread = ({ getThread, threadId }: Props) => {
   return (
     <div className="border-b-2 border-gray-500 p-5 w-full flex flex-col gap-4">
       <div className="flex items-center gap-5 w-full">
-        <img
-          src={user?.avatar || assets.Profile}
-          alt="avatar"
-          className="w-10 h-10 rounded-full object-cover"
-        />
+        <Link to={`/profile/${user?.userId}`}>
+          <div className="w-10 h-10 rounded-full object-cover">
+            <img src={user?.avatar || assets.Profile} alt="avatar" />
+          </div>
+        </Link>
 
         <div className="flex-1 flex items-center gap-3">
           <input

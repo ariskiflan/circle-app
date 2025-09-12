@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { assets } from "../assets/assets";
-import { logout } from "../slices/authSlice";
+import { logout } from "../store/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
@@ -30,12 +30,15 @@ const Sidebar = () => {
                   </li>
                 </Link>
 
-                <li className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
-                  <img className="w-10" src={assets.UserSearch} alt="" />
-                  <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer">
-                    Search
-                  </p>
-                </li>
+                <Link to={"/search"}>
+                  <li className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
+                    <img className="w-10" src={assets.UserSearch} alt="" />
+                    <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer">
+                      Search
+                    </p>
+                  </li>
+                </Link>
+
                 <li className="flex items-center gap-5 hover:translate-1 transition-all duration-100">
                   <img className="w-10" src={assets.Like} alt="" />
                   <p className="text-2xl text-white font-medium hover:font-bold cursor-pointer">

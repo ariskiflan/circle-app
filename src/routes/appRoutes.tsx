@@ -6,6 +6,8 @@ import Register from "../pages/Register";
 import ProtectedRoute from "./protectedRoute";
 import ThreadDetail from "../pages/ThreadDetail";
 import MyProfile from "../pages/MyProfile";
+import Profile from "../pages/Profile";
+import Search from "../pages/Search";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
           {
             path: "/my-profile",
             element: <MyProfile />,
+          },
+          {
+            path: "/profile/:id",
+            element: <Profile />,
+          },
+          {
+            path: "/search",
+            element: <Search />,
           },
         ],
       },
