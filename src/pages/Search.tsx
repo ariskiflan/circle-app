@@ -5,6 +5,7 @@ import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store";
+import ButtonFollows from "../components/ButtonFollows";
 
 const Search = () => {
   const [input, setInput] = useState("");
@@ -49,7 +50,7 @@ const Search = () => {
 
   return (
     <>
-      <div className="p-5 flex flex-col gap-5">
+      <div className="px-5 py-10 flex flex-col gap-5">
         <div>
           <input
             type="text"
@@ -83,9 +84,7 @@ const Search = () => {
                 </div>
 
                 <div>
-                  <button className="flex border-2 border-white py-2 px-4 rounded-2xl text-white font-semibold">
-                    Follow
-                  </button>
+                  <ButtonFollows />
                 </div>
               </div>
             ))

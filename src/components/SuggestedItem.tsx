@@ -1,24 +1,30 @@
 import { assets } from "../assets/assets";
+import type { IUser } from "../types/app";
+import ButtonFollows from "./ButtonFollows";
 
-const SuggestedItem = () => {
+interface IUserProps {
+  suggestedUsers: IUser;
+}
+
+const SuggestedItem = ({ suggestedUsers }: IUserProps) => {
+  const { fullname, username, profile } = suggestedUsers;
+
   return (
     <>
       <div className="flex items-center gap-5 justify-between">
         <div className="flex items-center gap-5">
-          <img src={assets.Avatar} alt="" className="w-10" />
+          <img src={profile?.avatar || assets.Avatar} alt="" className="w-10" />
 
           <div>
-            <p className="text-md font-semibold">mohammed jawir</p>
+            <p className="text-md font-semibold">{fullname}</p>
             <span className="text-gray-400 font-normal text-md">
-              @mohammedjawir
+              @{username}
             </span>
           </div>
         </div>
 
         <div>
-          <button className="flex border-2 border-white py-2 px-4 rounded-2xl text-white font-semibold">
-            Follow
-          </button>
+          <ButtonFollows follows={suggestedUsers} />
         </div>
       </div>
     </>

@@ -4,6 +4,8 @@ import type { RootState } from "../store";
 const Profile = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
+  console.log(user);
+
   return (
     <>
       <div className="bg-[#262626] p-5 rounded-2xl flex flex-col gap-5">

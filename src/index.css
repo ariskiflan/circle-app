@@ -12,3 +12,12 @@ html {
 html::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE & lama */
+  scrollbar-width: none; /* Firefox */
+}

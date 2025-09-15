@@ -50,6 +50,7 @@ export interface IProfile {
   cover?: string;
   user: IUser;
   userId?: number;
+  id: number;
 }
 
 export interface IUserSearch {

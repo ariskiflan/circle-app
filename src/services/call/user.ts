@@ -30,3 +30,13 @@ export const getUser = async (id: number) => {
 
   return res.data;
 };
+
+export const getUsersNotId = async () => {
+  const res = await api.get("suggested", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  return res.data;
+};

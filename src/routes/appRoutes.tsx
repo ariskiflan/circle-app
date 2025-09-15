@@ -8,6 +8,7 @@ import ThreadDetail from "../pages/ThreadDetail";
 import MyProfile from "../pages/MyProfile";
 import Profile from "../pages/Profile";
 import Search from "../pages/Search";
+import Follows from "../pages/Follows";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
           {
             path: "/search",
             element: <Search />,
+          },
+          {
+            path: "/follows",
+            element: <Follows />,
           },
         ],
       },

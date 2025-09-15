@@ -31,7 +31,7 @@ const MyProfile = () => {
     <>
       <div>
         <div className="sticky top-0 bg-[#1d1d1d] z-10">
-          <div className="p-5 flex flex-col gap-5">
+          <div className="px-5 py-10 flex flex-col gap-5">
             <div className="flex items-center gap-3">
               <Link to={"/"}>
                 <img src={assets.Back} alt="" className="w-10" />

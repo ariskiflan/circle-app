@@ -41,7 +41,7 @@ const Profile = () => {
     <>
       <div>
         <div className="sticky top-0 bg-[#1d1d1d] z-10">
-          <div className="p-5 flex flex-col gap-5">
+          <div className="px-5 py-10 flex flex-col gap-5">
             <div className="flex items-center gap-3">
               <Link to={"/"}>
                 <img src={assets.Back} alt="" className="w-10" />
@@ -57,13 +57,7 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className="flex justify-end">
-              <button className="flex border-2 border-white py-2 px-4 rounded-2xl text-white font-semibold">
-                Edit Profile
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 mt-10">
               <p className="text-2xl font-semibold">{userById?.fullname}</p>
               <span className="text-gray-400 font-semibold text-md">
                 @{userById?.username}

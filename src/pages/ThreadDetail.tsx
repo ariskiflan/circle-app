@@ -33,7 +33,7 @@ const ThreadDetail = () => {
   return (
     <>
       <div className="">
-        <div className="p-5">
+        <div className="px-5 py-10">
           <div className="flex gap-3 items-center">
             <Link to={"/"}>
               <img className="w-10" src={assets.Back} alt="" />
