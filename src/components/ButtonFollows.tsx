@@ -3,14 +3,14 @@ import type { IUser } from "../types/app";
 import type { AppDispatch, RootState } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getProfileAsync } from "../store/async/profile";
+import { getProfileAsync } from "../store/async/auth";
+import { getFollowerAsync, getFollowingAsync } from "../store/async/follows";
 
 interface IFollowsProps {
   follows: IUser;
-  handleFollows?: Array<() => void | Promise<void>>;
 }
 
-const ButtonFollows = ({ follows, handleFollows = [] }: IFollowsProps) => {
+const ButtonFollows = ({ follows }: IFollowsProps) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isFollowing, setIsFollowing] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -21,9 +21,10 @@ const ButtonFollows = ({ follows, handleFollows = [] }: IFollowsProps) => {
       await createFollow(Number(follows.id));
       setIsFollowing((prev) => !prev);
 
-      dispatch(getProfileAsync(token!));
+      await dispatch(getProfileAsync(token!)).unwrap();
 
-      handleFollows.forEach((fn) => fn());
+      await dispatch(getFollowerAsync());
+      await dispatch(getFollowingAsync());
     } catch (error) {
       console.log(error);
     }

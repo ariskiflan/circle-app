@@ -2,12 +2,11 @@ import { assets } from "../assets/assets";
 import type { IUser } from "../types/app";
 import ButtonFollows from "./ButtonFollows";
 
-interface IfollowsProps {
+interface IFollowsProps {
   follows: IUser;
-  handleFollows?: Array<() => void | Promise<void>>;
 }
 
-const ListFollows = ({ follows, handleFollows }: IfollowsProps) => {
+const ListFollows = ({ follows }: IFollowsProps) => {
   return (
     <>
       <div className="flex items-center gap-5 justify-between">
@@ -26,7 +25,7 @@ const ListFollows = ({ follows, handleFollows }: IfollowsProps) => {
         </div>
 
         <div>
-          <ButtonFollows follows={follows} handleFollows={handleFollows} />
+          <ButtonFollows follows={follows} />
         </div>
       </div>
     </>

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { IProfile } from "../../types/app";
-import { getProfileAsync } from "../async/profile";
+import { getProfileAsync } from "../async/auth";
 
 interface IAuthState {
   user: IProfile | null | undefined;

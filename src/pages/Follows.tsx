@@ -1,38 +1,23 @@
 import { useEffect, useState } from "react";
-import { getFollower, getFollowing } from "../services/call/follow";
-import type { IUser } from "../types/app";
 import ListFollows from "../components/ListFollows";
+import type { AppDispatch, RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+import { getFollowerAsync, getFollowingAsync } from "../store/async/follows";
 
 const Follows = () => {
   const [activeTab, setActiveTab] = useState("followers");
-  const [followers, setFollowers] = useState<IUser[]>([]);
-  const [following, setFollowing] = useState<IUser[]>([]);
 
-  const handleFollowers = async () => {
-    try {
-      const res = await getFollower();
-      setFollowers(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-
-    setActiveTab("followers");
-  };
-
-  const handleFollowing = async () => {
-    try {
-      const res = await getFollowing();
-      setFollowing(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-
-    setActiveTab("followers");
-  };
+  const dispatch = useDispatch<AppDispatch>();
+  const followersList = useSelector(
+    (state: RootState) => state.follows.followers
+  );
+  const followingList = useSelector(
+    (state: RootState) => state.follows.followings
+  );
 
   useEffect(() => {
-    handleFollowers();
-    handleFollowing();
+    dispatch(getFollowerAsync());
+    dispatch(getFollowingAsync());
   }, []);
 
   return (
@@ -64,23 +49,17 @@ const Follows = () => {
         <div className="p-5 ">
           {activeTab === "followers" ? (
             <div className="flex flex-col gap-5">
-              {followers.map((follower, index) => (
+              {followersList.map((follower, index) => (
                 <div key={index}>
-                  <ListFollows
-                    follows={follower}
-                    handleFollows={[handleFollowing, handleFollowers]}
-                  />
+                  <ListFollows follows={follower} />
                 </div>
               ))}
             </div>
           ) : (
             <div className="flex flex-col gap-5">
-              {following.map((following, index) => (
+              {followingList.map((following, index) => (
                 <div key={index}>
-                  <ListFollows
-                    follows={following}
-                    handleFollows={[handleFollowing, handleFollowers]}
-                  />
+                  <ListFollows follows={following} />
                 </div>
               ))}
             </div>

@@ -4,8 +4,6 @@ import type { RootState } from "../store";
 const Profile = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
-  console.log(user);
-
   return (
     <>
       <div className="bg-[#262626] p-5 rounded-2xl flex flex-col gap-5">
@@ -34,11 +32,11 @@ const Profile = () => {
           <div className="flex items-center gap-5">
             <p className="text-md font-semibold">
               {user?.user?.following?.length}{" "}
-              <span className="text-gray-400 font-normal">Following</span>
+              <span className="text-gray-400 font-normal">Followers</span>
             </p>
             <p className="text-md font-semibold">
               {user?.user?.follower?.length}{" "}
-              <span className="text-gray-400 font-normal">Followers</span>{" "}
+              <span className="text-gray-400 font-normal">Followings</span>{" "}
             </p>
           </div>
         </div>
