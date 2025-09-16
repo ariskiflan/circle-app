@@ -5,9 +5,10 @@ import type { ILogin } from "../types/app";
 import { login } from "../services/call/user";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { getProfile } from "../services/call/profile";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/slices/authSlice";
+import { getProfileAsync } from "../store/async/auth";
+import type { AppDispatch } from "../store";
 
 const Login = () => {
   const initialState = {
@@ -16,7 +17,7 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [formInput, setFormInput] = useState<ILogin>(initialState);
 
@@ -27,11 +28,9 @@ const Login = () => {
       if (res.status) {
         const token = res.data.token;
 
-        console.log(token, "token");
+        const profileRes = await dispatch(getProfileAsync(token!)).unwrap();
 
-        const profileRes = await getProfile(token);
-
-        dispatch(setUser({ user: profileRes.data, token }));
+        dispatch(setUser({ user: profileRes, token }));
 
         toast.success(`Login Success!`);
         navigate("/");

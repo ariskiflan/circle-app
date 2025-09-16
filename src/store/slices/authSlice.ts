@@ -10,12 +10,22 @@ interface IAuthState {
   errorMessage: string;
 }
 
-const savedUser = JSON.parse(localStorage.getItem("user") || "{}");
+const userStr = localStorage.getItem("user");
+let savedUser: IProfile | null = null;
+
+if (userStr) {
+  try {
+    savedUser = JSON.parse(userStr) as IProfile;
+  } catch {
+    savedUser = null;
+  }
+}
+
 const savedToken = localStorage.getItem("token");
 
 const initialState: IAuthState = {
-  user: savedUser ? (savedUser as IProfile) : undefined,
-  token: savedToken || "",
+  user: savedUser,
+  token: savedToken ?? "",
   loading: false,
   errorMessage: "",
 };

@@ -1,19 +1,33 @@
+import { useSelector } from "react-redux";
 import { assets } from "../assets/assets";
 import type { IUser } from "../types/app";
 import ButtonFollows from "./ButtonFollows";
+import type { RootState } from "../store";
+import { Link } from "react-router-dom";
 
 interface IFollowsProps {
   follows: IUser;
 }
 
 const ListFollows = ({ follows }: IFollowsProps) => {
+  const user = useSelector((state: RootState) => state.auth.user);
+
+  const handleRedirectProfile = () => {
+    if (user?.id !== follows?.id) {
+      return `/profile/${follows?.id}`;
+    }
+    return "/my-profile";
+  };
+
   return (
     <>
       <div className="flex items-center gap-5 justify-between">
         <div className="flex items-center gap-5">
-          <div className="w-10 h-10 rounded-full object-cover">
-            <img src={assets.Profile} alt="" />
-          </div>
+          <Link to={handleRedirectProfile()}>
+            <div className="w-10 h-10 rounded-full object-cover">
+              <img src={assets.Profile} alt="" />
+            </div>
+          </Link>
 
           <div>
             <p className="text-md font-semibold">{follows.fullname}</p>

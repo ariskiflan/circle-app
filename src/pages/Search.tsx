@@ -84,7 +84,7 @@ const Search = () => {
                 </div>
 
                 <div>
-                  <ButtonFollows />
+                  <ButtonFollows follows={user} />
                 </div>
               </div>
             ))

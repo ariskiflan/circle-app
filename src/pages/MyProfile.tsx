@@ -115,12 +115,9 @@ const MyProfile = () => {
             <div className="grid grid-cols-2 gap-2 p-5">
               {threadsByUserToken.map((thread) =>
                 thread.image?.map((img) => (
-                  <img
-                    key={img.id}
-                    src={img.image}
-                    alt="media"
-                    className="w-full"
-                  />
+                  <div key={img.id}>
+                    <img src={img.image} alt="media" className="w-full" />
+                  </div>
                 ))
               )}
             </div>
